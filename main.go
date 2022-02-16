@@ -3,6 +3,10 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"net/http"
+
+	"github.com/Kirill-27/biblioteka/handlers"
+	"github.com/go-chi/chi"
 	_ "github.com/lib/pq"
 )
 
@@ -25,13 +29,13 @@ func main() {
 		panic(err)
 	}
 	defer db.Close()
-	//r := chi.NewRouter()
-	//r.Route("/tags", func(r chi.Router) {
-	//	r.Get("/", handlers.GetOfferList)
-	//	r.Get("/{id}", exchangeRatesKeeper.CalculatePrise)
-	//})
-	//
-	//http.ListenAndServe(":8384", r)
+	r := chi.NewRouter()
+	r.Route("/tags", func(r chi.Router) {
+		//r.Get("/", handlers.GetTag)
+		r.Get("/{id}", handlers.GetTag)
+	})
+
+	http.ListenAndServe(":8384", r)
 	fmt.Println("Successfully connected!")
 
 }
